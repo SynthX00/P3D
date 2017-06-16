@@ -18,3 +18,10 @@ void Ball::Draw(GLUquadric *mysld) {
 	glTranslatef(posX, posY, posZ);
 	gluSphere(mysld, size, 60, 60);
 }
+
+void Ball::Draw() {
+	//glLoadIdentity();
+	glColor3f(red, green, blue);
+	glTranslatef(posX, posY, posZ);
+	glutSolidSphere(size, 60, 60);
+}

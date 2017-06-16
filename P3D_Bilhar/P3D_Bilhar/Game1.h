@@ -13,8 +13,8 @@ Pooltable table;
 std::vector<Ball>balls;
 
 tgaInfo *im;
-GLuint texture;
-GLUquadric *mysolid;
+GLuint texture[15];
+GLUquadric *mysolid[15];
 
 static float angle = 0.0;
 static float red = 1.0, blue = 1.0, green = 1.0;
@@ -23,6 +23,7 @@ static float oldX, oldY;
 static bool rot = false;
 static float theta = 0, phi = 0;
 
+//Objects
 void CreateTable() {
 	
 	table = Pooltable(0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,10.0f);
@@ -36,7 +37,7 @@ void CreateBalls() {
 	float y = 2.5;
 
 
-	balls.push_back(Ball(1.0f, 1.0f, 1.0f, -7.0f, y, 10.0f, size));
+	balls.push_back(Ball(1.0f, 1.0f, 1.0f, -6.0f, y, 10.0f, size));
 
 	for (int i = 0; i <= 5; i++)
 	{
@@ -44,15 +45,15 @@ void CreateBalls() {
 		{
 			if (count % 2)
 			{
-				balls.push_back(Ball(1.0f, 0.0f, 0.0f, j*0.5f, y, i*0.5f, size));
+				balls.push_back(Ball(1.0f, 0.0f, 0.0f, j*0.7f, y, i*0.7f, size));
 			}
 			else if (count == 12)
 			{
-				balls.push_back(Ball(0.0f, 0.0f, 0.0f, j*0.5f, y, i*0.5f, size));
+				balls.push_back(Ball(0.0f, 0.0f, 0.0f, j*0.7f, y, i*0.7f, size));
 			}
 			else
 			{
-				balls.push_back(Ball(0.0f, 0.0f, 1.0f, j*0.5f, y, i*0.5f, size));
+				balls.push_back(Ball(0.0f, 0.0f, 1.0f, j*0.7f, y, i*0.7f, size));
 			}
 			count++;
 		}
@@ -61,6 +62,7 @@ void CreateBalls() {
 	/*Ball ball(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	balls.push_back(ball);*/
 }
+//**Objects
 
 //lights
 void initLights(void) {
@@ -143,24 +145,23 @@ void applymaterial(int type) {
 //**lights
 
 //textures
+void load_tga_image(char *impathfile, int id) {
 
-void load_tga_image(void) {
-
-	char impathfile[255] = "PoolBalluv1.tga";
+	//char impathfile[255] = "PoolBalluv1.tga";
 
 	im = tgaLoad(impathfile);
 	printf("IMAGE INFO: %s\nstatus: %d\ntype: %d\npixelDepth: %d\nsize%d x %d\n", impathfile, im->status, im->type, im->pixelDepth, im->width, im->height);
 
-	glGenTextures(1, &texture);
+	glGenTextures(1, &texture[id]);
 
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, texture[id]);
 
 	//gerar coordenadas automaticamente
-	mysolid = gluNewQuadric();
-	gluQuadricDrawStyle(mysolid, GLU_FILL);
-	gluQuadricTexture(mysolid, GL_TRUE);
-	gluQuadricNormals(mysolid, GLU_SMOOTH);
-	gluQuadricOrientation(mysolid, GLU_INSIDE);
+	mysolid[id] = gluNewQuadric();
+	gluQuadricDrawStyle(mysolid[id], GLU_FILL);
+	gluQuadricTexture(mysolid[id], GL_TRUE);
+	gluQuadricNormals(mysolid[id], GLU_SMOOTH);
+	gluQuadricOrientation(mysolid[id], GLU_INSIDE);
 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
@@ -173,7 +174,6 @@ void load_tga_image(void) {
 
 	tgaDestroy(im);
 }
-
 //**textures
 
 void drawSceneGame1(void) {
@@ -184,19 +184,25 @@ void drawSceneGame1(void) {
 	glPopMatrix();
 
 	//draw balls
+	int _i = -1;
 	for (vector<Ball>::iterator it = balls.begin(); it != balls.end(); it++){
 		glPushMatrix();
-		
-		glTranslatef(-1.5f, 0.0f, -5.0f);
-		//glRotatef(180, 0.0f, 0.0f, 1.0f);
-		glRotatef(43, 0.0f, 1.0f, 0.0f);
-		
-		glEnable(GL_TEXTURE_2D);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		it->Draw(mysolid);
-		glDisable(GL_TEXTURE_2D);
+
+		glTranslatef(-2.5f, 0.0f, -5.0f);
+		glRotatef(44, 0.0f, 1.0f, 0.0f);
+
+		if (_i == -1)
+			it->Draw();
+		else 
+		{
+			glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, texture[_i]);
+			it->Draw(mysolid[_i]);
+			glDisable(GL_TEXTURE_2D);
+		}
 
 		glPopMatrix();
+		_i++;
 	}
 
 }

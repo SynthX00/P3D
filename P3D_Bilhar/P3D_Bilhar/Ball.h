@@ -7,6 +7,7 @@ public:
 	~Ball();
 
 	void Draw(GLUquadric *mysld);
+	void Draw();
 
 private:
 	float red, green, blue;

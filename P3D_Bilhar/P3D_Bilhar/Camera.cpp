@@ -103,7 +103,7 @@ namespace gameengine {
 		
 
 		//gluLookAt(eyex, eyey, eyez, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-		std::cout << "eyex: " << eyex <<" eyey: " << eyey << " eyez: " << eyez << " dirx: " << dirx << " diry: " << diry << " dirz: " << dirz << std::endl;
+		//std::cout << "eyex: " << eyex <<" eyey: " << eyey << " eyez: " << eyez << " dirx: " << dirx << " diry: " << diry << " dirz: " << dirz << std::endl;
 	}
 
 }
