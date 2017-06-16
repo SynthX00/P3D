@@ -26,6 +26,7 @@
     <ClInclude Include="glm.h" />
     <ClInclude Include="MainWindow.h" />
     <ClInclude Include="Pooltable.h" />
+    <ClInclude Include="tga.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
@@ -35,6 +36,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Pooltable.cpp" />
+    <ClCompile Include="tga.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="PoolBall1.tga" />
+    <Image Include="PoolBalluv1.tga" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{63A85FF4-CAD7-4417-B29F-1890D227087D}</ProjectGuid>

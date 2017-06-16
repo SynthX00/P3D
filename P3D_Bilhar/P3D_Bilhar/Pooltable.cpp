@@ -39,9 +39,9 @@ void Pooltable::Draw() {
 	//std::cout << "drawing table\n";
 	//glLoadIdentity();
 	//glTranslatef(posX, posY, posZ);
-	glRotatef(15, 0.0f, 1.0f, 0.0f);
+	//glRotatef(15, 0.0f, 1.0f, 0.0f);
 	glScalef(size, size, size);
-	glTranslatef(posX, posY, posZ);
+	//glTranslatef(posX, posY, posZ);
 	//glPushMatrix
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);

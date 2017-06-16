@@ -2,6 +2,7 @@
 
 #include<vector>
 #include "Game.h"
+#include "tga.h"
 #include "Ball.h"
 #include "Pooltable.h"
 
@@ -11,6 +12,9 @@ using namespace std;
 Pooltable table;
 std::vector<Ball>balls;
 
+tgaInfo *im;
+GLuint texture;
+GLUquadric *mysolid;
 
 static float angle = 0.0;
 static float red = 1.0, blue = 1.0, green = 1.0;
@@ -25,6 +29,40 @@ void CreateTable() {
 	table.LoadModel();
 }
 
+void CreateBalls() {
+
+	int count = 0;
+	float size = 0.3;
+	float y = 2.5;
+
+
+	balls.push_back(Ball(1.0f, 1.0f, 1.0f, -7.0f, y, 10.0f, size));
+
+	for (int i = 0; i <= 5; i++)
+	{
+		for (int j = 0; j < i; j++)
+		{
+			if (count % 2)
+			{
+				balls.push_back(Ball(1.0f, 0.0f, 0.0f, j*0.5f, y, i*0.5f, size));
+			}
+			else if (count == 12)
+			{
+				balls.push_back(Ball(0.0f, 0.0f, 0.0f, j*0.5f, y, i*0.5f, size));
+			}
+			else
+			{
+				balls.push_back(Ball(0.0f, 0.0f, 1.0f, j*0.5f, y, i*0.5f, size));
+			}
+			count++;
+		}
+	}
+
+	/*Ball ball(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+	balls.push_back(ball);*/
+}
+
+//lights
 void initLights(void) {
 	// Define a luz ambiente global
 	GLfloat global_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
@@ -102,38 +140,41 @@ void applymaterial(int type) {
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess[type]);
 	}
 }
+//**lights
 
-void CreateBalls() {
+//textures
 
-	int count=0;
-	float y = 3.0f;
+void load_tga_image(void) {
 
+	char impathfile[255] = "PoolBalluv1.tga";
 
-	balls.push_back(Ball(1.0f, 1.0f, 1.0f, -10.0f, y, 15.0f, 0.5f));
+	im = tgaLoad(impathfile);
+	printf("IMAGE INFO: %s\nstatus: %d\ntype: %d\npixelDepth: %d\nsize%d x %d\n", impathfile, im->status, im->type, im->pixelDepth, im->width, im->height);
 
-	for (int i = 0; i <= 5; i++)
-	{
-		for (int j = 0; j < i; j++)
-		{
-			if (count % 2)
-			{
-				balls.push_back(Ball(1.0f,0.0f,0.0f,j*1.0f,y,i*1.0f,0.5f));
-			}
-			else if (count == 12)
-			{
-				balls.push_back(Ball(0.0f, 0.0f, 0.0f, j*1.0f, y, i*1.0f, 0.5f));
-			}
-			else
-			{
-				balls.push_back(Ball(0.0f, 0.0f, 1.0f, j*1.0f, y, i*1.0f, 0.5f));
-			}
-			count++;
-		}
-	}
+	glGenTextures(1, &texture);
 
-	/*Ball ball(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	balls.push_back(ball);*/
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	//gerar coordenadas automaticamente
+	mysolid = gluNewQuadric();
+	gluQuadricDrawStyle(mysolid, GLU_FILL);
+	gluQuadricTexture(mysolid, GL_TRUE);
+	gluQuadricNormals(mysolid, GLU_SMOOTH);
+	gluQuadricOrientation(mysolid, GLU_INSIDE);
+
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, im->width, im->height, 0, GL_RGB, GL_UNSIGNED_BYTE, im->imageData);
+
+	tgaDestroy(im);
 }
+
+//**textures
 
 void drawSceneGame1(void) {
 
@@ -145,10 +186,16 @@ void drawSceneGame1(void) {
 	//draw balls
 	for (vector<Ball>::iterator it = balls.begin(); it != balls.end(); it++){
 		glPushMatrix();
-		glRotatef(60, 0.0f, 1.0f, 0.0f);
-		glTranslatef(-10.0f, 0.0f, -5.0f);
+		
+		glTranslatef(-1.5f, 0.0f, -5.0f);
+		//glRotatef(180, 0.0f, 0.0f, 1.0f);
+		glRotatef(43, 0.0f, 1.0f, 0.0f);
+		
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		it->Draw(mysolid);
+		glDisable(GL_TEXTURE_2D);
 
-		it->Draw();
 		glPopMatrix();
 	}
 
@@ -223,16 +270,16 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 			switch (key)
 			{
 			case GLUT_KEY_LEFT:
-				currentwindow->camera.cameraPan(-0.01);
+				currentwindow->camera.cameraPan(-0.05);
 					break;
 			case GLUT_KEY_RIGHT:
-				currentwindow->camera.cameraPan(0.01);
+				currentwindow->camera.cameraPan(0.05);
 				break;
 			case GLUT_KEY_UP:
-				currentwindow->camera.cameraTilt(0.01);
+				currentwindow->camera.cameraTilt(0.05);
 				break;
 			case GLUT_KEY_DOWN:
-				currentwindow->camera.cameraTilt(-0.01);
+				currentwindow->camera.cameraTilt(-0.05);
 				break;
 			default:
 				break;

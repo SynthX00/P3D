@@ -12,9 +12,9 @@ Ball::~Ball() {
 	std::cout << "Destroi bola\n";
 }
 
-void Ball::Draw() {
+void Ball::Draw(GLUquadric *mysld) {
 	//glLoadIdentity();
 	glColor3f(red, green, blue);
 	glTranslatef(posX, posY, posZ);
-	glutWireSphere(size, 60, 60);
+	gluSphere(mysld, size, 60, 60);
 }
