@@ -65,83 +65,83 @@ void CreateBalls() {
 //**Objects
 
 //lights
-void initLights(void) {
-	// Define a luz ambiente global
-	GLfloat global_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-	// Define a luz light0. Existem 8 fontes de luz no total.
-	GLfloat light0_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-	GLfloat light0_diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-	GLfloat light0_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	// Define a luz light1. Existem 8 fontes de luz no total.
-	GLfloat light1_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-	GLfloat light1_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	GLfloat light1_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	GLfloat spot_angle = 45.0f;
-	GLfloat spot_exp = 12.0f; // Maior valor = maior concentração de luz no centro
-
-							  // Fonte de luz ambiente
-	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
-
-	// Fonte de luz posicional
-	glLightfv(GL_LIGHT0, GL_AMBIENT, light0_ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
-	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.1f);
-	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.05f);
-	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.05f);
-
-	// Fonte de luz cónica
-	glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
-	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, spot_angle);
-	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, spot_exp);
-
-	// Activa a utilização de iluminação
-	glEnable(GL_LIGHTING);
-	// Activa a fonte de luz light0
-	glEnable(GL_LIGHT0);
-	// Activa a fonte de luz light1
-	glEnable(GL_LIGHT1);
-}
-
-void applylights(void) {
-	// Define a posição de light0
-	GLfloat light0_position[] = { 0.0f, 3.0f, 0.0f, 1.0f };
-	// Define a posição de direcção de light1
-	GLfloat spot_position[] = { 0.0f, 3.0f, -10.0f, 1.0f };
-	GLfloat spot_direction[] = { 0.0f, -1.0f, 0.0f };
-
-	// Aplica a light0
-	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
-
-	// Aplica a light1
-	glLightfv(GL_LIGHT1, GL_POSITION, spot_position);
-	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_direction);
-
-	glDisable(GL_LIGHTING);
-	glEnable(GL_LIGHTING);
-}
-
-void applymaterial(int type) {
-	// Define as propriedades dos materiais
-	// Type: 0 (Branco); 1 (Amarelo); 2 (Ciano); 3 (Branco-Emissor)
-	GLfloat mat_ambient[4][4] = { { 1.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 0.0f, 1.0f },{ 0.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 1.0f, 1.0f } };
-	GLfloat mat_diffuse[4][4] = { { 0.5f, 0.5f, 0.5f, 1.0f },{ 0.5f, 0.5f, 0.0f, 1.0f },{ 0.0f, 0.5f, 0.5f, 1.0f },{ 0.5f, 0.5f, 0.5f, 1.0f } };
-	GLfloat mat_specular[4][4] = { { 1.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 0.0f, 1.0f },{ 0.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 1.0f, 1.0f } };
-	GLfloat mat_emission[4][4] = { { 0.0f, 0.0f, 0.0f, 0.0f },{ 0.0f, 0.0f, 0.0f, 0.0f },{ 0.0f, 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f, 1.0f } };
-	GLfloat mat_shininess[4][1] = { { 20.0f },{ 20.0f },{ 20.0f },{ 20.0f } };
-
-	if ((type >= 0) && (type < 4))
-	{
-		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient[type]); // GL_FRONT, GL_FRONT_AND_BACK , GL_BACK, 
-		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse[type]);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular[type]);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, mat_emission[type]);
-		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess[type]);
-	}
-}
+//void initLights(void) {
+//	// Define a luz ambiente global
+//	GLfloat global_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+//	// Define a luz light0. Existem 8 fontes de luz no total.
+//	GLfloat light0_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+//	GLfloat light0_diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+//	GLfloat light0_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+//	// Define a luz light1. Existem 8 fontes de luz no total.
+//	GLfloat light1_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+//	GLfloat light1_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+//	GLfloat light1_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+//	GLfloat spot_angle = 45.0f;
+//	GLfloat spot_exp = 12.0f; // Maior valor = maior concentração de luz no centro
+//
+//							  // Fonte de luz ambiente
+//	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+//	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
+//
+//	// Fonte de luz posicional
+//	glLightfv(GL_LIGHT0, GL_AMBIENT, light0_ambient);
+//	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
+//	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
+//	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.1f);
+//	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.05f);
+//	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.05f);
+//
+//	// Fonte de luz cónica
+//	glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
+//	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
+//	glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
+//	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, spot_angle);
+//	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, spot_exp);
+//
+//	// Activa a utilização de iluminação
+//	glEnable(GL_LIGHTING);
+//	// Activa a fonte de luz light0
+//	glEnable(GL_LIGHT0);
+//	// Activa a fonte de luz light1
+//	glEnable(GL_LIGHT1);
+//}
+//
+//void applylights(void) {
+//	// Define a posição de light0
+//	GLfloat light0_position[] = { 0.0f, 3.0f, 0.0f, 1.0f };
+//	// Define a posição de direcção de light1
+//	GLfloat spot_position[] = { 0.0f, 3.0f, -10.0f, 1.0f };
+//	GLfloat spot_direction[] = { 0.0f, -1.0f, 0.0f };
+//
+//	// Aplica a light0
+//	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
+//
+//	// Aplica a light1
+//	glLightfv(GL_LIGHT1, GL_POSITION, spot_position);
+//	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_direction);
+//
+//	glDisable(GL_LIGHTING);
+//	glEnable(GL_LIGHTING);
+//}
+//
+//void applymaterial(int type) {
+//	// Define as propriedades dos materiais
+//	// Type: 0 (Branco); 1 (Amarelo); 2 (Ciano); 3 (Branco-Emissor)
+//	GLfloat mat_ambient[4][4] = { { 1.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 0.0f, 1.0f },{ 0.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 1.0f, 1.0f } };
+//	GLfloat mat_diffuse[4][4] = { { 0.5f, 0.5f, 0.5f, 1.0f },{ 0.5f, 0.5f, 0.0f, 1.0f },{ 0.0f, 0.5f, 0.5f, 1.0f },{ 0.5f, 0.5f, 0.5f, 1.0f } };
+//	GLfloat mat_specular[4][4] = { { 1.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 0.0f, 1.0f },{ 0.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 1.0f, 1.0f } };
+//	GLfloat mat_emission[4][4] = { { 0.0f, 0.0f, 0.0f, 0.0f },{ 0.0f, 0.0f, 0.0f, 0.0f },{ 0.0f, 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f, 1.0f } };
+//	GLfloat mat_shininess[4][1] = { { 20.0f },{ 20.0f },{ 20.0f },{ 20.0f } };
+//
+//	if ((type >= 0) && (type < 4))
+//	{
+//		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient[type]); // GL_FRONT, GL_FRONT_AND_BACK , GL_BACK, 
+//		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse[type]);
+//		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular[type]);
+//		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, mat_emission[type]);
+//		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess[type]);
+//	}
+//}
 //**lights
 
 //textures
@@ -161,7 +161,7 @@ void load_tga_image(char *impathfile, int id) {
 	gluQuadricDrawStyle(mysolid[id], GLU_FILL);
 	gluQuadricTexture(mysolid[id], GL_TRUE);
 	gluQuadricNormals(mysolid[id], GLU_SMOOTH);
-	gluQuadricOrientation(mysolid[id], GLU_INSIDE);
+	gluQuadricOrientation(mysolid[id], GLU_OUTSIDE);
 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
@@ -227,6 +227,9 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 
 		currentWindow->camera.cameraUpdate(theta, phi);
 
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, currentWindow->mat_ambient_and_diffuse);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, currentWindow->mat_specular);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, currentWindow->mat_shininess);
 		drawSceneGame1();
 
 		glutSwapBuffers();
