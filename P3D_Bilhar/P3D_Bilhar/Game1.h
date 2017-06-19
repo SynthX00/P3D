@@ -270,11 +270,13 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 	});
 
 	glutSpecialFunc([](int key, int x, int y) {
-		if (key == GLUT_KEY_F1) glutFullScreen();
-		if (key == GLUT_KEY_F2) glutReshapeWindow(800, 600);
-		
+
 		MainWindow*currentwindow = (MainWindow *)glutGetWindowData();
 		glutSetWindow(currentwindow->windowId);
+
+		if (key == GLUT_KEY_F1) glutFullScreen();
+		if (key == GLUT_KEY_F2) glutReshapeWindow(800, 600);
+		if (key == GLUT_KEY_F3) currentwindow->camera.cameraSetPosition(2.0, 10.0, 15.0, 0.0, -0.1, -1.0, 0.0, 1.0, 0.0);
 
 			switch (key)
 			{
