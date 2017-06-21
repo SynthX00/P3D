@@ -65,19 +65,18 @@ void funcmyDL(void)
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-	float x = 30.0f;
+	float x = 25.0f;
 
-	// Z+ Face
-	// Selecciona textura
+	// back
 	glBindTexture(GL_TEXTURE_2D, textures[0]);
 	glBegin(GL_QUADS);
 	glNormal3f(0.0f, 0.0f, 1.0f);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, x);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, x);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, x);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, x);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, x);
 	glEnd();
-	// Z- Face
+	//frente
 	glBindTexture(GL_TEXTURE_2D, textures[1]);
 	glBegin(GL_QUADS);
 	glNormal3f(0.0f, 0.0f, -1.0f);
@@ -86,40 +85,40 @@ void funcmyDL(void)
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, -x);
 	glEnd();
-	// X+ Face
+	//direita
 	glBindTexture(GL_TEXTURE_2D, textures[2]);
 	glBegin(GL_QUADS);
 	glNormal3f(1.0f, 0.0f, 0.0f);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, -x, x);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, -x);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, -x);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, -x, x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, x, x);
 	glEnd();
-	// X- Face
+	//esquerda
 	glBindTexture(GL_TEXTURE_2D, textures[3]);
 	glBegin(GL_QUADS);
 	glNormal3f(-1.0f, 0.0f, 0.0f);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, -x);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(-x, -x, x);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, x, x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, -x);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, x, x);
+	glTexCoord2f(1.0f,0.0f); glVertex3f(-x, -x, x);
 	glEnd();
-	// Y+ Face
+	// cima
 	glBindTexture(GL_TEXTURE_2D, textures[4]);
 	glBegin(GL_QUADS);
 	glNormal3f(0.0f, 1.0f, 0.0f);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, x, x);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, x, -x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, x, x);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, x, x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, -x);
 	glEnd();
-	// Y- Face
+	// baixo
 	glBindTexture(GL_TEXTURE_2D, textures[5]);
 	glBegin(GL_QUADS);
 	glNormal3f(0.0f, -1.0f, 0.0f);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, x);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, -x, x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, x);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, -x, -x);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, -x, -x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, -x, -x);
 	glEnd();
 
@@ -158,8 +157,7 @@ void load_cube_images(void)
 
 		// Cria textura de mipmaps
 		gluBuild2DMipmaps(GL_TEXTURE_2D, 3, image[j]->width, image[j]->height, GL_RGB, GL_UNSIGNED_BYTE, image[j]->imageData);
-		// Se não tem mipmaps
-		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image[j]->width, image[j]->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image[j]->imageData);
+
 	}
 
 	// Destrói as imagens
@@ -167,6 +165,9 @@ void load_cube_images(void)
 	{
 		tgaDestroy(image[j]);
 	}
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 }
 
 /*************************************FIM***************************************/
