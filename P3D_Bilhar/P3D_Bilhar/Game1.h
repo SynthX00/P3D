@@ -38,7 +38,6 @@ tgaInfo *image[6];
 GLuint textures[6];
 int myDL;
 
-
 void init(void)
 {
 	// Define técnica de shading: GL_FLAT, GL_SMOOTH
@@ -75,7 +74,7 @@ void funcmyDL(void)
 	glNormal3f(0.0f, 0.0f, 1.0f);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, x);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x,x);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, x);
 	glEnd();
 	// Z- Face
@@ -164,18 +163,18 @@ void load_cube_images(void)
 	}
 
 	// Destrói as imagens
-	/*for (int j = 0; j<6; j++) 
+	for (int j = 0; j<6; j++)
 	{
 		tgaDestroy(image[j]);
-	}*/
+	}
 }
 
 /*************************************FIM***************************************/
 
 //Objects
 void CreateTable() {
-	
-	table = Pooltable(0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,10.0f);
+
+	table = Pooltable(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 10.0f);
 	table.LoadModel();
 }
 
@@ -254,7 +253,7 @@ void drawSceneGame1(void) {
 
 	//draw balls
 	int _i = -1;
-	for (vector<Ball>::iterator it = balls.begin(); it != balls.end(); it++){
+	for (vector<Ball>::iterator it = balls.begin(); it != balls.end(); it++) {
 		glPushMatrix();
 
 		glTranslatef(-2.5f, 0.0f, -5.0f);
@@ -262,7 +261,7 @@ void drawSceneGame1(void) {
 
 		if (_i == -1)
 			it->Draw();
-		else 
+		else
 		{
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, texture[_i]);
@@ -304,16 +303,15 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		glEnable(GL_TEXTURE_2D);
 
 		// Cubo
-		init();
-		load_cube_images();
-		initDL();
+		//init();
+		//load_cube_images();
+		//initDL();
 		glCallList(myDL);
 		glDisable(GL_TEXTURE_2D);
-	
+
 
 		glutSwapBuffers();
 
-		glFlush();
 	});
 
 	glutReshapeFunc([](int w, int h) {
@@ -350,7 +348,7 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 	});
 
 	glutKeyboardUpFunc([](unsigned char key, int x, int y) {
-		
+
 	});
 
 	glutSpecialFunc([](int key, int x, int y) {
@@ -360,25 +358,25 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 
 		if (key == GLUT_KEY_F1) glutFullScreen();
 		if (key == GLUT_KEY_F2) glutReshapeWindow(800, 600);
-		if (key == GLUT_KEY_F3) currentwindow->camera.cameraSetPosition(2.0, 10.0, 15.0, 0.0, -0.1, -1.0, 0.0, 1.0, 0.0);
+		if (key == GLUT_KEY_F3) currentwindow->camera.cameraSetPosition(2.0, 10.0, 15.0, 0.0, 0.1, 1.0, 0.0, 1.0, 0.0);
 
-			switch (key)
-			{
-			case GLUT_KEY_LEFT:
-				currentwindow->camera.cameraPan(-0.05);
-					break;
-			case GLUT_KEY_RIGHT:
-				currentwindow->camera.cameraPan(0.05);
-				break;
-			case GLUT_KEY_UP:
-				currentwindow->camera.cameraTilt(0.05);
-				break;
-			case GLUT_KEY_DOWN:
-				currentwindow->camera.cameraTilt(-0.05);
-				break;
-			default:
-				break;
-			}
+		switch (key)
+		{
+		case GLUT_KEY_LEFT:
+			currentwindow->camera.cameraPan(-0.05);
+			break;
+		case GLUT_KEY_RIGHT:
+			currentwindow->camera.cameraPan(0.05);
+			break;
+		case GLUT_KEY_UP:
+			currentwindow->camera.cameraTilt(0.05);
+			break;
+		case GLUT_KEY_DOWN:
+			currentwindow->camera.cameraTilt(-0.05);
+			break;
+		default:
+			break;
+		}
 
 	});
 
@@ -410,17 +408,17 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		/*rot = false;
 		if (button == GLUT_LEFT_BUTTON)
 		{
-			oldX = x;
-			oldY = y;
-			rot = true;
+		oldX = x;
+		oldY = y;
+		rot = true;
 		}*/
 	});
 
 	glutMotionFunc([](int x, int y) {
 		/*if (rot)
 		{
-			theta += (x - oldX)*0.01;
-			phi += (y - oldY)*0.01;
+		theta += (x - oldX)*0.01;
+		phi += (y - oldY)*0.01;
 		}
 		oldX = x;
 		oldY = y;

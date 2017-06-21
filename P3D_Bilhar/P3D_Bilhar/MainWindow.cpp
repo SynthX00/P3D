@@ -71,6 +71,10 @@ namespace gameengine {
 		glEnable(GL_CULL_FACE);
 
 		glShadeModel(GL_SMOOTH);
+
+		glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
 		std::cout << "[MainWindow] Create Main Window " << windowId << std::endl;
 	}
 

@@ -16,6 +16,10 @@ int main(int argc, char **argv) {
 
 	Game1 game;
 	int wId = game.gameAddMainWindow(0, 0, 800, 600, "Main Window 1");
+
+	load_cube_images();
+	initDL();
+
 	load_tga_image("PoolBalluv1.tga", 0);
 	load_tga_image("PoolBalluv2.tga", 1);
 	load_tga_image("PoolBalluv3.tga", 2);
@@ -39,7 +43,7 @@ int main(int argc, char **argv) {
 
 	// Esta função é geral para o freeglut
 	/*glutIdleFunc([](void) {
-		// Colocar aqui o código que se pretenda executar sempre que não existires outros eventos
+	// Colocar aqui o código que se pretenda executar sempre que não existires outros eventos
 	});*/
 
 	// Definir o FPS (É comum a todas as janelas)
