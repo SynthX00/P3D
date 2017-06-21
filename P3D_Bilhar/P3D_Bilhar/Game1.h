@@ -107,10 +107,10 @@ void funcmyDL(void)
 	glBindTexture(GL_TEXTURE_2D, textures[4]);
 	glBegin(GL_QUADS);
 	glNormal3f(0.0f, 1.0f, 0.0f);
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, x, -x);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, x, x);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, x, x);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, -x);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, x, x);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, x, x);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-x, x, -x);
 	glEnd();
 	// baixo
 	glBindTexture(GL_TEXTURE_2D, textures[5]);
