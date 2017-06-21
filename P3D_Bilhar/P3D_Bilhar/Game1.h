@@ -65,7 +65,7 @@ void funcmyDL(void)
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-	float x = 25.0f;
+	float x = 55.0f;
 
 	// back
 	glBindTexture(GL_TEXTURE_2D, textures[0]);
@@ -303,10 +303,7 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 
 		glEnable(GL_TEXTURE_2D);
 
-		// Cubo
-		//init();
-		//load_cube_images();
-		//initDL();
+		
 		glCallList(myDL);
 		glDisable(GL_TEXTURE_2D);
 
