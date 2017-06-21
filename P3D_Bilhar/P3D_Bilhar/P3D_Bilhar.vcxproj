@@ -39,6 +39,12 @@
     <ClCompile Include="tga.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="cm_back.tga" />
+    <Image Include="cm_bottom.tga" />
+    <Image Include="cm_front.tga" />
+    <Image Include="cm_left.tga" />
+    <Image Include="cm_right.tga" />
+    <Image Include="cm_top.tga" />
     <Image Include="PoolBall1.tga" />
     <Image Include="PoolBalluv1.tga" />
   </ItemGroup>

@@ -5,6 +5,8 @@
 #include "tga.h"
 #include "Ball.h"
 #include "Pooltable.h"
+#include <stdio.h>
+#include <gl/freeglut.h>
 
 using namespace gameengine;
 using namespace std;
@@ -23,10 +25,157 @@ static float oldX, oldY;
 static bool rot = false;
 static float theta = 0, phi = 0;
 
+/*************************************SKYBOX***************************************/
+// Protótipos de funções
+void init(void);
+void initDL(void);
+void funcmyDL(void);
+void load_cube_images(void);
+
+
+// Variáveis globais
+tgaInfo *image[6];
+GLuint textures[6];
+int myDL;
+
+//void init(void)
+//{
+//	// Define técnica de shading: GL_FLAT, GL_SMOOTH
+//	glShadeModel(GL_SMOOTH);
+//
+//	// Activa o teste de profundidade
+//	glEnable(GL_DEPTH_TEST);
+//
+//	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+//	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+//}
+
+
+void initDL(void)
+{
+	// Compila o modelo
+	funcmyDL();
+}
+
+void funcmyDL(void)
+{
+	myDL = glGenLists(1);
+
+	glNewList(myDL, GL_COMPILE);
+
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+	float x = 25.0f;
+
+	// back
+	glBindTexture(GL_TEXTURE_2D, textures[0]);
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, x);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, x);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, x);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, x);
+	glEnd();
+	//frente
+	glBindTexture(GL_TEXTURE_2D, textures[1]);
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 0.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, -x);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, -x);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, -x);
+	glEnd();
+	//direita
+	glBindTexture(GL_TEXTURE_2D, textures[2]);
+	glBegin(GL_QUADS);
+	glNormal3f(1.0f, 0.0f, 0.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, -x);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, -x, x);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, x, x);
+	glEnd();
+	//esquerda
+	glBindTexture(GL_TEXTURE_2D, textures[3]);
+	glBegin(GL_QUADS);
+	glNormal3f(-1.0f, 0.0f, 0.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, -x);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, -x);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, x, x);
+	glTexCoord2f(1.0f,0.0f); glVertex3f(-x, -x, x);
+	glEnd();
+	// cima
+	glBindTexture(GL_TEXTURE_2D, textures[4]);
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, x, x);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, x, x);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-x, x, -x);
+	glEnd();
+	// baixo
+	glBindTexture(GL_TEXTURE_2D, textures[5]);
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, -1.0f, 0.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, -x, x);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, x);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, -x, -x);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, -x, -x);
+	glEnd();
+
+	glEndList();
+}
+
+
+void load_cube_images(void)
+{
+	char *impathfiles[6] = { "cm_front.tga", "cm_back2.tga", "cm_left.tga", "cm_right.tga", "cm_top.tga", "cm_bottom.tga" };
+
+
+	// Carrega as imagens de textura
+	for (int j = 0; j<6; j++)
+	{
+		image[j] = tgaLoad(impathfiles[j]);
+
+		printf("IMAGE INFO: %s\nstatus: %d\ntype: %d\npixelDepth: %d\nsize%d x %d\n", impathfiles[j], image[j]->status, image[j]->type, image[j]->pixelDepth, image[j]->width, image[j]->height); fflush(stdout);
+	}
+
+	// Cria nomes de texturas
+	glGenTextures(6, textures);
+
+	for (int j = 0; j<6; j++)
+	{
+		// Selecciona uma textura
+		glBindTexture(GL_TEXTURE_2D, textures[j]);
+
+		// Selecciona a mistura da textura com a cor
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+		// Cria textura de mipmaps
+		gluBuild2DMipmaps(GL_TEXTURE_2D, 3, image[j]->width, image[j]->height, GL_RGB, GL_UNSIGNED_BYTE, image[j]->imageData);
+
+	}
+
+	// Destrói as imagens
+	for (int j = 0; j<6; j++)
+	{
+		tgaDestroy(image[j]);
+	}
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+}
+
+/*************************************FIM***************************************/
+
 //Objects
 void CreateTable() {
-	
-	table = Pooltable(0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,10.0f);
+
+	table = Pooltable(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 10.0f);
 	table.LoadModel();
 }
 
@@ -63,86 +212,6 @@ void CreateBalls() {
 	balls.push_back(ball);*/
 }
 //**Objects
-
-//lights
-//void initLights(void) {
-//	// Define a luz ambiente global
-//	GLfloat global_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-//	// Define a luz light0. Existem 8 fontes de luz no total.
-//	GLfloat light0_ambient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-//	GLfloat light0_diffuse[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-//	GLfloat light0_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-//	// Define a luz light1. Existem 8 fontes de luz no total.
-//	GLfloat light1_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-//	GLfloat light1_diffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-//	GLfloat light1_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-//	GLfloat spot_angle = 45.0f;
-//	GLfloat spot_exp = 12.0f; // Maior valor = maior concentração de luz no centro
-//
-//							  // Fonte de luz ambiente
-//	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-//	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
-//
-//	// Fonte de luz posicional
-//	glLightfv(GL_LIGHT0, GL_AMBIENT, light0_ambient);
-//	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
-//	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
-//	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.1f);
-//	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.05f);
-//	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.05f);
-//
-//	// Fonte de luz cónica
-//	glLightfv(GL_LIGHT1, GL_AMBIENT, light1_ambient);
-//	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
-//	glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
-//	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, spot_angle);
-//	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, spot_exp);
-//
-//	// Activa a utilização de iluminação
-//	glEnable(GL_LIGHTING);
-//	// Activa a fonte de luz light0
-//	glEnable(GL_LIGHT0);
-//	// Activa a fonte de luz light1
-//	glEnable(GL_LIGHT1);
-//}
-//
-//void applylights(void) {
-//	// Define a posição de light0
-//	GLfloat light0_position[] = { 0.0f, 3.0f, 0.0f, 1.0f };
-//	// Define a posição de direcção de light1
-//	GLfloat spot_position[] = { 0.0f, 3.0f, -10.0f, 1.0f };
-//	GLfloat spot_direction[] = { 0.0f, -1.0f, 0.0f };
-//
-//	// Aplica a light0
-//	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
-//
-//	// Aplica a light1
-//	glLightfv(GL_LIGHT1, GL_POSITION, spot_position);
-//	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot_direction);
-//
-//	glDisable(GL_LIGHTING);
-//	glEnable(GL_LIGHTING);
-//}
-//
-//void applymaterial(int type) {
-//	// Define as propriedades dos materiais
-//	// Type: 0 (Branco); 1 (Amarelo); 2 (Ciano); 3 (Branco-Emissor)
-//	GLfloat mat_ambient[4][4] = { { 1.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 0.0f, 1.0f },{ 0.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 1.0f, 1.0f } };
-//	GLfloat mat_diffuse[4][4] = { { 0.5f, 0.5f, 0.5f, 1.0f },{ 0.5f, 0.5f, 0.0f, 1.0f },{ 0.0f, 0.5f, 0.5f, 1.0f },{ 0.5f, 0.5f, 0.5f, 1.0f } };
-//	GLfloat mat_specular[4][4] = { { 1.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 0.0f, 1.0f },{ 0.0f, 1.0f, 1.0f, 1.0f },{ 1.0f, 1.0f, 1.0f, 1.0f } };
-//	GLfloat mat_emission[4][4] = { { 0.0f, 0.0f, 0.0f, 0.0f },{ 0.0f, 0.0f, 0.0f, 0.0f },{ 0.0f, 0.0f, 0.0f, 0.0f },{ 1.0f, 1.0f, 1.0f, 1.0f } };
-//	GLfloat mat_shininess[4][1] = { { 20.0f },{ 20.0f },{ 20.0f },{ 20.0f } };
-//
-//	if ((type >= 0) && (type < 4))
-//	{
-//		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_ambient[type]); // GL_FRONT, GL_FRONT_AND_BACK , GL_BACK, 
-//		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse[type]);
-//		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular[type]);
-//		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, mat_emission[type]);
-//		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess[type]);
-//	}
-//}
-//**lights
 
 //textures
 void load_tga_image(char *impathfile, int id) {
@@ -185,7 +254,7 @@ void drawSceneGame1(void) {
 
 	//draw balls
 	int _i = -1;
-	for (vector<Ball>::iterator it = balls.begin(); it != balls.end(); it++){
+	for (vector<Ball>::iterator it = balls.begin(); it != balls.end(); it++) {
 		glPushMatrix();
 
 		glTranslatef(-2.5f, 0.0f, -5.0f);
@@ -193,7 +262,7 @@ void drawSceneGame1(void) {
 
 		if (_i == -1)
 			it->Draw();
-		else 
+		else
 		{
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture(GL_TEXTURE_2D, texture[_i]);
@@ -232,7 +301,18 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, currentWindow->mat_shininess);
 		drawSceneGame1();
 
+		glEnable(GL_TEXTURE_2D);
+
+		// Cubo
+		//init();
+		//load_cube_images();
+		//initDL();
+		glCallList(myDL);
+		glDisable(GL_TEXTURE_2D);
+
+
 		glutSwapBuffers();
+
 	});
 
 	glutReshapeFunc([](int w, int h) {
@@ -255,7 +335,10 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 
 		// Altera o sistema de coordenadas, para GL_MODELVIEW
 		glMatrixMode(GL_MODELVIEW);
+		//glLoadIdentity();
+
 	});
+
 
 	glutKeyboardFunc([](unsigned char key, int x, int y) {
 		MainWindow *currentWindow = (MainWindow *)glutGetWindowData();
@@ -266,33 +349,35 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 	});
 
 	glutKeyboardUpFunc([](unsigned char key, int x, int y) {
-		
+
 	});
 
 	glutSpecialFunc([](int key, int x, int y) {
-		if (key == GLUT_KEY_F1) glutFullScreen();
-		if (key == GLUT_KEY_F2) glutReshapeWindow(800, 600);
-		
+
 		MainWindow*currentwindow = (MainWindow *)glutGetWindowData();
 		glutSetWindow(currentwindow->windowId);
 
-			switch (key)
-			{
-			case GLUT_KEY_LEFT:
-				currentwindow->camera.cameraPan(-0.05);
-					break;
-			case GLUT_KEY_RIGHT:
-				currentwindow->camera.cameraPan(0.05);
-				break;
-			case GLUT_KEY_UP:
-				currentwindow->camera.cameraTilt(0.05);
-				break;
-			case GLUT_KEY_DOWN:
-				currentwindow->camera.cameraTilt(-0.05);
-				break;
-			default:
-				break;
-			}
+		if (key == GLUT_KEY_F1) glutFullScreen();
+		if (key == GLUT_KEY_F2) glutReshapeWindow(800, 600);
+		if (key == GLUT_KEY_F3) currentwindow->camera.cameraSetPosition(2.0, 10.0, 15.0, 0.0, 0.1, 1.0, 0.0, 1.0, 0.0);
+
+		switch (key)
+		{
+		case GLUT_KEY_LEFT:
+			currentwindow->camera.cameraPan(-0.05);
+			break;
+		case GLUT_KEY_RIGHT:
+			currentwindow->camera.cameraPan(0.05);
+			break;
+		case GLUT_KEY_UP:
+			currentwindow->camera.cameraTilt(0.05);
+			break;
+		case GLUT_KEY_DOWN:
+			currentwindow->camera.cameraTilt(-0.05);
+			break;
+		default:
+			break;
+		}
 
 	});
 
@@ -324,17 +409,17 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		/*rot = false;
 		if (button == GLUT_LEFT_BUTTON)
 		{
-			oldX = x;
-			oldY = y;
-			rot = true;
+		oldX = x;
+		oldY = y;
+		rot = true;
 		}*/
 	});
 
 	glutMotionFunc([](int x, int y) {
 		/*if (rot)
 		{
-			theta += (x - oldX)*0.01;
-			phi += (y - oldY)*0.01;
+		theta += (x - oldX)*0.01;
+		phi += (y - oldY)*0.01;
 		}
 		oldX = x;
 		oldY = y;

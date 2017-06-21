@@ -325,3 +325,4 @@ void tgaDestroy(tgaInfo *info) {
 		free(info);
 	}
 }
+
