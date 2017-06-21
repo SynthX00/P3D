@@ -39,12 +39,12 @@
     <ClCompile Include="tga.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\..\Desktop\back.tga" />
-    <Image Include="..\..\..\..\..\Desktop\bottom.tga" />
-    <Image Include="..\..\..\..\..\Desktop\front.tga" />
-    <Image Include="..\..\..\..\..\Desktop\left.tga" />
-    <Image Include="..\..\..\..\..\Desktop\right.tga" />
-    <Image Include="..\..\..\..\..\Desktop\top.tga" />
+    <Image Include="..\..\..\..\..\Desktop\cm_back.tga" />
+    <Image Include="..\..\..\..\..\Desktop\cm_bottom.tga" />
+    <Image Include="..\..\..\..\..\Desktop\cm_front.tga" />
+    <Image Include="..\..\..\..\..\Desktop\cm_left.tga" />
+    <Image Include="..\..\..\..\..\Desktop\cm_right.tga" />
+    <Image Include="..\..\..\..\..\Desktop\cm_top.tga" />
     <Image Include="PoolBall1.tga" />
     <Image Include="PoolBalluv1.tga" />
   </ItemGroup>

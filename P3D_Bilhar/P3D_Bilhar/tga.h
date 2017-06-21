@@ -32,3 +32,4 @@ void tgaRGBtoGreyscale(tgaInfo *info);
 int tgaGrabScreenSeries(char *filename, int x,int y, int w, int h);
 
 void tgaDestroy(tgaInfo *info);
+
