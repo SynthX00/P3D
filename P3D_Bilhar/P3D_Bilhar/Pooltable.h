@@ -1,4 +1,5 @@
-#pragma once
+#ifndef POOLTABLE_H
+#define POOLTABLE_H
 
 #include "glm.h"
 
@@ -20,3 +21,5 @@ private:
 	float posX, posY, posZ;
 	float size;
 };
+
+#endif // !POOLTABLE_H

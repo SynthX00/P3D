@@ -1,4 +1,3 @@
-﻿  main.cpp
-x:\python\documents\github\p3d\p3d_bilhar\p3d_bilhar\game1.h(36): warning C4305: 'initializing': truncation from 'double' to 'float'
-  P3D_Bilhar.vcxproj -> X:\Python\Documents\GitHub\P3D\P3D_Bilhar\x64\Debug\P3D_Bilhar.exe
-  P3D_Bilhar.vcxproj -> X:\Python\Documents\GitHub\P3D\P3D_Bilhar\x64\Debug\P3D_Bilhar.pdb (Full PDB)
+﻿  Poolcue.cpp
+  P3D_Bilhar.vcxproj -> C:\Users\andre\Documents\GitHub\P3D\P3D_Bilhar\x64\Debug\P3D_Bilhar.exe
+  P3D_Bilhar.vcxproj -> C:\Users\andre\Documents\GitHub\P3D\P3D_Bilhar\x64\Debug\P3D_Bilhar.pdb (Full PDB)

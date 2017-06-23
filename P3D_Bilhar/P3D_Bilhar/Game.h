@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <gl/freeglut.h>
+#include <gl\freeglut.h>
 #include "MainWindow.h"
 
 namespace gameengine {

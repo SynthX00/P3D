@@ -5,6 +5,7 @@
 #include "tga.h"
 #include "Ball.h"
 #include "Pooltable.h"
+#include "Poolcue.h"
 #include <stdio.h>
 #include <gl/freeglut.h>
 
@@ -12,6 +13,7 @@ using namespace gameengine;
 using namespace std;
 
 Pooltable table;
+Poolcue cue;
 std::vector<Ball>balls;
 
 tgaInfo *im;
@@ -179,6 +181,12 @@ void CreateTable() {
 	table.LoadModel();
 }
 
+void CreatePoolCue() {
+
+	cue = Poolcue(0.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.0f, 1.0f);
+	cue.LoadModel();
+}
+
 void CreateBalls() {
 
 	int count = 0;
@@ -250,6 +258,7 @@ void drawSceneGame1(void) {
 	//draw table
 	glPushMatrix();
 	table.Draw();
+	cue.Draw();
 	glPopMatrix();
 
 	//draw balls

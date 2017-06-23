@@ -1,5 +1,5 @@
 #include <iostream>
-#include <gl/freeglut.h>
+#include <gl\freeglut.h>
 #include "Camera.h"
 
 namespace gameengine {

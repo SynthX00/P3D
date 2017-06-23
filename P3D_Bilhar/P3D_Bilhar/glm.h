@@ -4,6 +4,8 @@
 #ifndef M_PI
 #define M_PI 3.14159265f
 #endif
+#ifndef GLM_H
+#define GLM_H
 
 #define GLM_NONE     (0)            /* render with only vertices */
 #define GLM_FLAT     (1 << 0)       /* render with facet normals */
@@ -262,3 +264,5 @@ glmWeld(GLMmodel* model, GLfloat epsilon);
  */
 GLubyte* 
 glmReadPPM(char* filename, int* width, int* height);
+
+#endif
