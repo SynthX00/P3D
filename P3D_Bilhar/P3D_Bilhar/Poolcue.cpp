@@ -47,7 +47,8 @@ void Poolcue::Draw() {
 	
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	glEnable(GL_BLEND); //Transparencia	glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
+	glEnable(GL_BLEND); //Transparencia	
 	glmDraw(cueModel, GLM_SMOOTH | GLM_MATERIAL);
 	
 	glDisable(GL_LIGHT0);

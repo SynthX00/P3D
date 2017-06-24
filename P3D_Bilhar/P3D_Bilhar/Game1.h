@@ -183,7 +183,7 @@ void CreateTable() {
 
 void CreatePoolCue() {
 
-	cue = Poolcue(0.0f, 0.0f, 0.0f, 0.50f, 0.0f, 0.50f, 0.0f, 1.0f);
+	cue = Poolcue(0.0f, 0.0f, 0.0f, 0.50f, 0.025f, 0.30f, 1.5f, 0.75f);
 	cue.LoadModel();
 }
 
@@ -257,12 +257,6 @@ void load_tga_image(char *impathfile, int id) {
 
 void drawSceneGame1(void) {
 
-	//draw table
-	glPushMatrix();
-	table.Draw();
-	cue.Draw();
-	glPopMatrix();
-
 	//draw balls
 	int _i = -1;
 	for (vector<Ball>::iterator it = balls.begin(); it != balls.end(); it++) {
@@ -284,6 +278,12 @@ void drawSceneGame1(void) {
 		glPopMatrix();
 		_i++;
 	}
+
+	//draw table
+	glPushMatrix();
+	table.Draw();
+	cue.Draw();
+	glPopMatrix();
 
 }
 
@@ -307,19 +307,18 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 
 		currentWindow->camera.cameraUpdate(theta, phi);
 
+		//Skybox
+		glEnable(GL_TEXTURE_2D);
+		glCallList(myDL);
+		glDisable(GL_TEXTURE_2D);
+		//**Skybox
+
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, currentWindow->mat_ambient_and_diffuse);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, currentWindow->mat_specular);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, currentWindow->mat_shininess);
 		drawSceneGame1();
 
-		glEnable(GL_TEXTURE_2D);
-
-		// Cubo
-		//init();
-		//load_cube_images();
-		//initDL();
-		glCallList(myDL);
-		glDisable(GL_TEXTURE_2D);
+		
 
 
 		glutSwapBuffers();
