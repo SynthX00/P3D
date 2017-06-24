@@ -8,10 +8,11 @@
 
 int main(int argc, char **argv) {
 
+	
 	CreateTable();
-	CreatePoolCue();
 	CreateBalls();
-
+	CreatePoolCue();
+	
 
 	//initLights(); //not doing shit!
 

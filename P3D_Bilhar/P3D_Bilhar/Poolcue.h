@@ -7,7 +7,7 @@ class Poolcue
 {
 public:
 	Poolcue();
-	Poolcue(float r, float g, float b, float x, float y, float z, float size);
+	Poolcue(float r, float g, float b, float alpha, float x, float y, float z, float size);
 	~Poolcue();
 
 	void LoadModel();
@@ -17,7 +17,7 @@ private:
 
 	GLMmodel *cueModel;
 
-	float red, green, blue;
+	float red, green, blue, alpha;
 	float posX, posY, posZ;
 	float size;
 };

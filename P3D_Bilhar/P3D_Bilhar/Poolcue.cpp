@@ -4,8 +4,8 @@
 
 Poolcue::Poolcue() {}
 
-Poolcue::Poolcue(float r, float g, float b, float x, float y, float z, float size) :
-	red(r), green(g), blue(b), posX(x), posY(y), posZ(z), size(size) {
+Poolcue::Poolcue(float r, float g, float b, float alpha, float x, float y, float z, float size) :
+	red(r), green(g), blue(b), alpha(alpha), posX(x), posY(y), posZ(z), size(size) {
 
 	std::cout << "Cria taco\n";
 }
@@ -41,13 +41,18 @@ void Poolcue::Draw() {
 	glTranslatef(posX, posY, posZ);
 	glRotatef(90.0, 0.0f, 1.0f, 0.0f);
 	glScalef(size, size, size);
+	glColor4f(red, green, blue, alpha);
 	//glTranslatef(posX, posY, posZ);
 	//glPushMatrix
+	
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	glEnable(GL_BLEND); //Transparencia	glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
 	glmDraw(cueModel, GLM_SMOOTH | GLM_MATERIAL);
+	
 	glDisable(GL_LIGHT0);
 	glDisable(GL_LIGHTING);
+	glDisable(GL_BLEND);
 
 	//glColor3f(red, green, blue);
 	//glTranslatef(posX, posY, posZ);

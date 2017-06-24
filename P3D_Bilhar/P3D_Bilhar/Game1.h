@@ -183,7 +183,7 @@ void CreateTable() {
 
 void CreatePoolCue() {
 
-	cue = Poolcue(0.0f, 0.0f, 0.0f, 0.0f, 0.50f, 0.0f, 1.0f);
+	cue = Poolcue(0.0f, 0.0f, 0.0f, 0.50f, 0.0f, 0.50f, 0.0f, 1.0f);
 	cue.LoadModel();
 }
 
@@ -219,6 +219,8 @@ void CreateBalls() {
 	/*Ball ball(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	balls.push_back(ball);*/
 }
+
+
 //**Objects
 
 //textures
