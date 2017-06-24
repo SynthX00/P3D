@@ -356,6 +356,11 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 
 		if (key == 27 /* ESC */) glutLeaveMainLoop();
 
+		/*if (key == 32 /*SPACE)
+		{
+			balls[0].~Ball();
+		}*/
+
 	});
 
 	glutKeyboardUpFunc([](unsigned char key, int x, int y) {
