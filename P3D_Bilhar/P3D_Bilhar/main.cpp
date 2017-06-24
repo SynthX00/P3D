@@ -12,9 +12,7 @@ int main(int argc, char **argv) {
 	CreateTable();
 	CreateBalls();
 	CreatePoolCue();
-	
 
-	//initLights(); //not doing shit!
 
 	Game1 game;
 	int wId = game.gameAddMainWindow(0, 0, 800, 600, "Main Window 1");

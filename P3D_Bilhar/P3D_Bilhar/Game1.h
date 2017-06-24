@@ -29,7 +29,6 @@ static float theta = 0, phi = 0;
 
 /*************************************SKYBOX***************************************/
 // Protótipos de funções
-void init(void);
 void initDL(void);
 void funcmyDL(void);
 void load_cube_images(void);
@@ -39,19 +38,6 @@ void load_cube_images(void);
 tgaInfo *image[6];
 GLuint textures[6];
 int myDL;
-
-//void init(void)
-//{
-//	// Define técnica de shading: GL_FLAT, GL_SMOOTH
-//	glShadeModel(GL_SMOOTH);
-//
-//	// Activa o teste de profundidade
-//	glEnable(GL_DEPTH_TEST);
-//
-//	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-//	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-//}
-
 
 void initDL(void)
 {
@@ -257,6 +243,12 @@ void load_tga_image(char *impathfile, int id) {
 
 void drawSceneGame1(void) {
 
+	//draw table
+	glPushMatrix();
+	table.Draw();
+	cue.Draw();
+	glPopMatrix();
+
 	//draw balls
 	int _i = -1;
 	for (vector<Ball>::iterator it = balls.begin(); it != balls.end(); it++) {
@@ -278,12 +270,6 @@ void drawSceneGame1(void) {
 		glPopMatrix();
 		_i++;
 	}
-
-	//draw table
-	glPushMatrix();
-	table.Draw();
-	cue.Draw();
-	glPopMatrix();
 
 }
 

@@ -1,8 +1,4 @@
 ﻿  main.cpp
-c:\users\andre\documents\github\p3d\p3d_bilhar\p3d_bilhar\game1.h(185): warning C4305: 'initializing': truncation from 'double' to 'float'
-  Game.cpp
-  Camera.cpp
-  Generating Code...
-  LINK : C:\Users\andre\Documents\GitHub\P3D\P3D_Bilhar\Debug\P3D_Bilhar.exe not found or not built by the last incremental link; performing full link
-  P3D_Bilhar.vcxproj -> C:\Users\andre\Documents\GitHub\P3D\P3D_Bilhar\Debug\P3D_Bilhar.exe
-  P3D_Bilhar.vcxproj -> C:\Users\andre\Documents\GitHub\P3D\P3D_Bilhar\Debug\P3D_Bilhar.pdb (Full PDB)
+x:\python\documents\github\p3d\p3d_bilhar\p3d_bilhar\game1.h(179): warning C4305: 'initializing': truncation from 'double' to 'float'
+  P3D_Bilhar.vcxproj -> X:\Python\Documents\GitHub\P3D\P3D_Bilhar\Debug\P3D_Bilhar.exe
+  P3D_Bilhar.vcxproj -> X:\Python\Documents\GitHub\P3D\P3D_Bilhar\Debug\P3D_Bilhar.pdb (Full PDB)
