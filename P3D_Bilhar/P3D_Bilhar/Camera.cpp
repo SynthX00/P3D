@@ -80,6 +80,7 @@ namespace gameengine {
 		diry = sin(angleTilt);
 		dirz = -cos(anglePan) * cos(angleTilt);
 
+		//permite rodar a camera 360 graus para cima sem inverter
 		if (cos(angleTilt) < 0.0) upy = -1.0;
 		else upy = 1.0;
 

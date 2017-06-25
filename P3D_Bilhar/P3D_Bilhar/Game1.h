@@ -44,7 +44,7 @@ void funccube(void)
 
 	glNewList(myDL, GL_COMPILE);
 
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	//glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 	float x = 25.0f;
 
