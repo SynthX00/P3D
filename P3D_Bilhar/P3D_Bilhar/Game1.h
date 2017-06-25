@@ -39,13 +39,9 @@ tgaInfo *image[6];
 GLuint textures[6];
 int myDL;
 
-void initDL(void)
-{
-	// Compila o modelo
-	funcmyDL();
-}
 
-void funcmyDL(void)
+//compila modelo
+void funccube(void)
 {
 	myDL = glGenLists(1);
 
@@ -58,52 +54,51 @@ void funcmyDL(void)
 	// back
 	glBindTexture(GL_TEXTURE_2D, textures[0]);
 	glBegin(GL_QUADS);
-	glNormal3f(0.0f, 0.0f, 1.0f);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, x);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, x);
 	glEnd();
+
 	//frente
 	glBindTexture(GL_TEXTURE_2D, textures[1]);
 	glBegin(GL_QUADS);
-	glNormal3f(0.0f, 0.0f, -1.0f);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, -x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, -x);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, -x);
 	glEnd();
+
 	//direita
 	glBindTexture(GL_TEXTURE_2D, textures[2]);
 	glBegin(GL_QUADS);
-	glNormal3f(1.0f, 0.0f, 0.0f);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, -x);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, -x, x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, x, x);
 	glEnd();
+
 	//esquerda
 	glBindTexture(GL_TEXTURE_2D, textures[3]);
 	glBegin(GL_QUADS);
-	glNormal3f(-1.0f, 0.0f, 0.0f);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, -x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, -x);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, x, x);
 	glTexCoord2f(1.0f,0.0f); glVertex3f(-x, -x, x);
 	glEnd();
+
 	// cima
 	glBindTexture(GL_TEXTURE_2D, textures[4]);
 	glBegin(GL_QUADS);
-	glNormal3f(0.0f, 1.0f, 0.0f);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, x, x);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, x, x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(-x, x, -x);
 	glEnd();
+
 	// baixo
 	glBindTexture(GL_TEXTURE_2D, textures[5]);
 	glBegin(GL_QUADS);
-	glNormal3f(0.0f, -1.0f, 0.0f);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, -x, x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, x);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, -x, -x);
@@ -297,7 +292,7 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		glEnable(GL_TEXTURE_2D);
 		glCallList(myDL);
 		glDisable(GL_TEXTURE_2D);
-		//**Skybox
+		//**fim
 
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, currentWindow->mat_ambient_and_diffuse);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, currentWindow->mat_specular);
@@ -361,6 +356,7 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		if (key == GLUT_KEY_F1) glutFullScreen();
 		if (key == GLUT_KEY_F2) glutReshapeWindow(800, 600);
 		if (key == GLUT_KEY_F3) currentwindow->camera.cameraSetPosition(2.0, 10.0, 15.0, 0.0, 0.1, 1.0, 0.0, 1.0, 0.0);
+		if (key == GLUT_KEY_F4) currentwindow->camera.cameraSetPosition(0.0, 30.0, 0.0, 0.0, 0.2, 1.005, 1.1, 0.3, 0.01);
 
 		switch (key)
 		{
