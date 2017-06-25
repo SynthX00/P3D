@@ -299,16 +299,11 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, currentWindow->mat_shininess);
 		drawSceneGame1();
 
-<<<<<<< HEAD
 		glEnable(GL_TEXTURE_2D);
 
 		
 		glCallList(myDL);
 		glDisable(GL_TEXTURE_2D);
-=======
-		
->>>>>>> Rufo
-
 
 		glutSwapBuffers();
 
