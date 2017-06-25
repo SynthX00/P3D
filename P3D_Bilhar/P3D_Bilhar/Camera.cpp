@@ -1,13 +1,13 @@
 #include <iostream>
-#include <gl/freeglut.h>
+#include <gl\freeglut.h>
 #include "Camera.h"
 
 namespace gameengine {
 
 	Camera::Camera() {
-		eyex = 0.0; eyey = 0.0; eyez = -1.0;
-		dirx = 0.0; diry = 0.0; dirz = -1.0;
-		upx = 0.0; upy = 1.0; upz = 0.0;
+		eyex = 0.0; eyey = 0.0; eyez = 0.0;
+		dirx = 0.0; diry = 0.0; dirz = 0.0;
+		upx = 0.0; upy = 0.0; upz = 0.0;
 
 		anglePan = 0.0; deltaAnglePan = 0.0;
 		angleTilt = 0.0; deltaAngleTilt = 0.0;

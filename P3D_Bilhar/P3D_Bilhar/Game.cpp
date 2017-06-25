@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <gl/freeglut.h>
+#include <gl\freeglut.h>
 #include "Game.h"
 
 namespace gameengine {

@@ -5,6 +5,7 @@
 #include "tga.h"
 #include "Ball.h"
 #include "Pooltable.h"
+#include "Poolcue.h"
 #include <stdio.h>
 #include <gl/freeglut.h>
 
@@ -12,6 +13,7 @@ using namespace gameengine;
 using namespace std;
 
 Pooltable table;
+Poolcue cue;
 std::vector<Ball>balls;
 
 tgaInfo *im;
@@ -27,7 +29,6 @@ static float theta = 0, phi = 0;
 
 /*************************************SKYBOX***************************************/
 // Protótipos de funções
-void init(void);
 void initDL(void);
 void funcmyDL(void);
 void load_cube_images(void);
@@ -38,26 +39,9 @@ tgaInfo *image[6];
 GLuint textures[6];
 int myDL;
 
-//void init(void)
-//{
-//	// Define técnica de shading: GL_FLAT, GL_SMOOTH
-//	glShadeModel(GL_SMOOTH);
-//
-//	// Activa o teste de profundidade
-//	glEnable(GL_DEPTH_TEST);
-//
-//	glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-//	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-//}
 
-
-void initDL(void)
-{
-	// Compila o modelo
-	funcmyDL();
-}
-
-void funcmyDL(void)
+//compila modelo
+void funccube(void)
 {
 	myDL = glGenLists(1);
 
@@ -70,52 +54,51 @@ void funcmyDL(void)
 	// back
 	glBindTexture(GL_TEXTURE_2D, textures[0]);
 	glBegin(GL_QUADS);
-	glNormal3f(0.0f, 0.0f, 1.0f);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, x);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, x);
 	glEnd();
+
 	//frente
 	glBindTexture(GL_TEXTURE_2D, textures[1]);
 	glBegin(GL_QUADS);
-	glNormal3f(0.0f, 0.0f, -1.0f);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, -x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, -x);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, -x);
 	glEnd();
+
 	//direita
 	glBindTexture(GL_TEXTURE_2D, textures[2]);
 	glBegin(GL_QUADS);
-	glNormal3f(1.0f, 0.0f, 0.0f);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, -x);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, -x, x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, x, x);
 	glEnd();
+
 	//esquerda
 	glBindTexture(GL_TEXTURE_2D, textures[3]);
 	glBegin(GL_QUADS);
-	glNormal3f(-1.0f, 0.0f, 0.0f);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, -x, -x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-x, x, -x);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, x, x);
 	glTexCoord2f(1.0f,0.0f); glVertex3f(-x, -x, x);
 	glEnd();
+
 	// cima
 	glBindTexture(GL_TEXTURE_2D, textures[4]);
 	glBegin(GL_QUADS);
-	glNormal3f(0.0f, 1.0f, 0.0f);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, x, -x);
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, x, x);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(-x, x, x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(-x, x, -x);
 	glEnd();
+
 	// baixo
 	glBindTexture(GL_TEXTURE_2D, textures[5]);
 	glBegin(GL_QUADS);
-	glNormal3f(0.0f, -1.0f, 0.0f);
 	glTexCoord2f(1.0f, 1.0f); glVertex3f(-x, -x, x);
 	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, -x, x);
 	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, -x, -x);
@@ -179,6 +162,12 @@ void CreateTable() {
 	table.LoadModel();
 }
 
+void CreatePoolCue() {
+
+	cue = Poolcue(0.0f, 0.0f, 0.0f, 0.50f, 0.025f, 0.30f, 1.5f, 0.75f);
+	cue.LoadModel();
+}
+
 void CreateBalls() {
 
 	int count = 0;
@@ -211,6 +200,8 @@ void CreateBalls() {
 	/*Ball ball(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	balls.push_back(ball);*/
 }
+
+
 //**Objects
 
 //textures
@@ -250,6 +241,7 @@ void drawSceneGame1(void) {
 	//draw table
 	glPushMatrix();
 	table.Draw();
+	cue.Draw();
 	glPopMatrix();
 
 	//draw balls
@@ -296,16 +288,26 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 
 		currentWindow->camera.cameraUpdate(theta, phi);
 
+		//Skybox
+		glEnable(GL_TEXTURE_2D);
+		glCallList(myDL);
+		glDisable(GL_TEXTURE_2D);
+		//**fim
+
 		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, currentWindow->mat_ambient_and_diffuse);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, currentWindow->mat_specular);
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, currentWindow->mat_shininess);
 		drawSceneGame1();
 
+<<<<<<< HEAD
 		glEnable(GL_TEXTURE_2D);
 
 		
 		glCallList(myDL);
 		glDisable(GL_TEXTURE_2D);
+=======
+		
+>>>>>>> Rufo
 
 
 		glutSwapBuffers();
@@ -343,6 +345,11 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 
 		if (key == 27 /* ESC */) glutLeaveMainLoop();
 
+		/*if (key == 32 /*SPACE)
+		{
+			balls[0].~Ball();
+		}*/
+
 	});
 
 	glutKeyboardUpFunc([](unsigned char key, int x, int y) {
@@ -357,6 +364,7 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		if (key == GLUT_KEY_F1) glutFullScreen();
 		if (key == GLUT_KEY_F2) glutReshapeWindow(800, 600);
 		if (key == GLUT_KEY_F3) currentwindow->camera.cameraSetPosition(2.0, 10.0, 15.0, 0.0, 0.1, 1.0, 0.0, 1.0, 0.0);
+		if (key == GLUT_KEY_F4) currentwindow->camera.cameraSetPosition(0.0, 30.0, 0.0, 0.0, 0.2, 1.005, 1.1, 0.3, 0.01);
 
 		switch (key)
 		{

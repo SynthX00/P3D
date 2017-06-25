@@ -12,7 +12,6 @@ namespace gameengine {
 		void cameraTilt(double tilt);
 		void cameraPan(double pan);
 		void cameraMove(double move);
-		void glutSpecialFunc(int key, int x, int y);
 		void cameraUpdate(float theta, float phi);
 
 	private:
