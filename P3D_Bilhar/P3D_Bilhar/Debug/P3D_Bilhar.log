@@ -1,1 +1,4 @@
-﻿
+﻿  main.cpp
+c:\users\utilizador\documents\github\p3d\p3d_bilhar\p3d_bilhar\game1.h(170): warning C4305: 'initializing': truncation from 'double' to 'float'
+  P3D_Bilhar.vcxproj -> C:\Users\Utilizador\Documents\GitHub\P3D\P3D_Bilhar\Debug\P3D_Bilhar.exe
+  P3D_Bilhar.vcxproj -> C:\Users\Utilizador\Documents\GitHub\P3D\P3D_Bilhar\Debug\P3D_Bilhar.pdb (Full PDB)

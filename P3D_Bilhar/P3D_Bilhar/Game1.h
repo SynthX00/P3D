@@ -29,8 +29,6 @@ static float theta = 0, phi = 0;
 
 /*************************************SKYBOX***************************************/
 // Protótipos de funções
-void initDL(void);
-void funcmyDL(void);
 void load_cube_images(void);
 
 
