@@ -40,20 +40,20 @@ void Pooltable::Draw() {
 	//glLoadIdentity();
 	//glTranslatef(posX, posY, posZ);
 	//glRotatef(15, 0.0f, 1.0f, 0.0f);
-	glScalef(size, size, size);
 	//glTranslatef(posX, posY, posZ);
 	//glPushMatrix
 	//glEnable(GL_BLEND);
+
+	glScalef(size, size, size);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glmDraw(tableModel, GLM_SMOOTH | GLM_MATERIAL);
-	//glDisable(GL_BLEND);
 	glDisable(GL_LIGHT0);
 	glDisable(GL_LIGHTING);
 
-	
-	//glTranslatef(posX, posY, posZ);
-	/*glBegin(GL_QUADS);
+	/*glDisable(GL_BLEND);
+	glTranslatef(posX, posY, posZ);
+	glBegin(GL_QUADS);
 	glVertex3f(-20.0f, -1.0f, -30.0f);
 	glVertex3f(-20.0f, -1.0f, 30.0f);
 	glVertex3f(20.0f, -1.0f, 30.0f);

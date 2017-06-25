@@ -1,6 +1,6 @@
 #pragma once
 
-#include<vector>
+#include <vector>
 #include "Game.h"
 #include "tga.h"
 #include "Ball.h"
@@ -39,7 +39,6 @@ tgaInfo *image[6];
 GLuint textures[6];
 int myDL;
 
-
 //compila modelo
 void funccube(void)
 {
@@ -49,7 +48,7 @@ void funccube(void)
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-	float x = 55.0f;
+	float x = 25.0f;
 
 	// back
 	glBindTexture(GL_TEXTURE_2D, textures[0]);
@@ -107,7 +106,6 @@ void funccube(void)
 
 	glEndList();
 }
-
 
 void load_cube_images(void)
 {
@@ -200,8 +198,6 @@ void CreateBalls() {
 	/*Ball ball(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
 	balls.push_back(ball);*/
 }
-
-
 //**Objects
 
 //textures
@@ -268,6 +264,37 @@ void drawSceneGame1(void) {
 
 }
 
+//**TEXT
+void renderString(float x, float y, char *string) {
+
+	glColor3f(1.0f, 0.0f, 0.0f);
+
+	char *c;
+	glRasterPos2f(x, y);
+	for (c = string; *c != '\0'; c++) {
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, *c);
+	}
+}
+
+void setOrthographicProjection(int w, int h) {
+
+	glMatrixMode(GL_PROJECTION);
+
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0, w, h, 0);
+
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void restorePerspectiveProjection() {
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+}
+//******************
+
 class Game1 : public Game { public: void gameSetWindowCallbacks(int windowID); };
 
 void Game1::gameSetWindowCallbacks(int windowID) {
@@ -283,6 +310,7 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		glutSetWindow(currentWindow->windowId);
 		if (currentWindow->windowId == 1)
 			currentWindow->windowId = currentWindow->windowId;
+
 		glClearColor(0.0, 0.0, 0.0, 0.0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -299,12 +327,22 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, currentWindow->mat_shininess);
 		drawSceneGame1();
 
-		glEnable(GL_TEXTURE_2D);
+		//cout << "w: " << currentWindow->screenWidth << " h: " << currentWindow->screenHeight << endl;
+		//text
 
-		
-		glCallList(myDL);
-		glDisable(GL_TEXTURE_2D);
+		setOrthographicProjection(currentWindow->screenWidth, currentWindow->screenHeight);
 
+		glPushMatrix();
+		glLoadIdentity();
+		renderString(5, 20, "P3D-Bilhar");
+		renderString(5, 40, "Daniel Rangel");
+		renderString(5, 60, "Pedro Silva");
+		renderString(5, 80, "Andre Rufo");
+		glPopMatrix();
+
+		restorePerspectiveProjection();
+
+		//**********
 		glutSwapBuffers();
 
 	});
@@ -332,7 +370,6 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		//glLoadIdentity();
 
 	});
-
 
 	glutKeyboardFunc([](unsigned char key, int x, int y) {
 		MainWindow *currentWindow = (MainWindow *)glutGetWindowData();
@@ -380,7 +417,6 @@ void Game1::gameSetWindowCallbacks(int windowID) {
 		}
 
 	});
-
 
 	glutSpecialUpFunc([](int key, int x, int y) {
 		MainWindow*currentwindow = (MainWindow *)glutGetWindowData();
