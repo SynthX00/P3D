@@ -19,9 +19,9 @@ namespace gameengine {
 		windowId = glutCreateWindow(windowName.c_str());
 
 		/*lighting*/
-		light_ambient[0] = 0.1;
-		light_ambient[1] = 0.1;
-		light_ambient[2] = 0.1;
+		light_ambient[0] = 0.5;
+		light_ambient[1] = 0.5;
+		light_ambient[2] = 0.5;
 		light_ambient[3] = 1.0;
 
 		light_diffuse[0] = 1.0;
@@ -37,7 +37,7 @@ namespace gameengine {
 		light_position[0] = 1.0;
 		light_position[1] = 1.0;
 		light_position[2] = 1.0;
-		light_position[3] = 0.0;
+		light_position[3] = 1.0;
 
 		glEnable(GL_LIGHTING);
 		glEnable(GL_LIGHT0);
